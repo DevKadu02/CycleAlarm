@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,7 +20,13 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,9 +69,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String calculateWakeTimes(String sleepTime) {
-        // Lógica para calcular horários de acordo com ciclos de sono
-        // Substitua isso com a lógica correta para calcular os horários
-        return "Horários calculados aqui";
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        List<String> reverseWakeTimes = new ArrayList<>();
+        try {
+            Date sleepDate = sdf.parse(sleepTime);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(sleepDate);
+
+            // Adiciona os horários para acordar considerando ciclos de 90 minutos
+            for (int i = 1; i <= 6; i++) { // Considera 6 ciclos de sono
+                calendar.add(Calendar.MINUTE, 90); // Adiciona 90 minutos para cada ciclo
+                reverseWakeTimes.add(sdf.format(calendar.getTime()) + " - " + i + " ciclo(s)");
+            }
+            Collections.reverse(reverseWakeTimes);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Ordena os horários do mais próximo ao mais distante
+        Collections.reverse(reverseWakeTimes);
+
+        StringBuilder sb = new StringBuilder("Horários sugeridos para acordar:\n");
+        for (String time : reverseWakeTimes) {
+            sb.append(time).append("\n");
+        }
+        return sb.toString();
     }
 
     private void showTimePickerDialog() {
@@ -110,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
             calendar.set(Calendar.MINUTE, minute);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
+
+
 
             // Configura o alarme para a hora selecionada
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

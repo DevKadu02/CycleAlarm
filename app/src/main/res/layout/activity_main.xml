@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Campo de entrada para a hora de dormir -->
+
+    <!-- Botão para calcular os horários de acordar -->
+
+    <!-- Área para exibir os horários sugeridos -->
+
+    <TextView
+        android:id="@+id/sleepTimeLabel"
+        android:layout_width="232dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="56dp"
+        android:text="Informe a hora de dormir:"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/sleepTimeInput"
+        android:layout_width="93dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sleepTimeLabel"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="129dp"
+        android:autofillHints=""
+        android:hint="HH:mm"
+        android:inputType="time" />
+
+    <Button
+        android:id="@+id/calculateButton"
+        android:layout_width="232dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sleepTimeInput"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="52dp"
+        android:text="Calcular Horários de Acordar" />
+
+    <TextView
+        android:id="@+id/wakeTimesOutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calculateButton"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"/>
+
+    <!-- Botão para definir o alarme -->
+    <Button
+        android:id="@+id/setAlarmButton"
+        android:layout_width="130dp"
+        android:layout_height="72dp"
+        android:layout_below="@+id/calculateButton"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="100dp"
+        android:text="Definir Alarme"
+        android:visibility="visible" />
+</RelativeLayout>

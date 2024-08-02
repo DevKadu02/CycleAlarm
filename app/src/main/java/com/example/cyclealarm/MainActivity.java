@@ -76,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(sleepDate);
 
-            // Adiciona os horários para acordar considerando ciclos de 90 minutos
-            for (int i = 1; i <= 6; i++) { // Considera 6 ciclos de sono
-                calendar.add(Calendar.MINUTE, 90); // Adiciona 90 minutos para cada ciclo
+
+            for (int i = 1; i <= 6; i++) {
+                calendar.add(Calendar.MINUTE, 90);
                 reverseWakeTimes.add(sdf.format(calendar.getTime()) + " - " + i + " ciclo(s)");
             }
             Collections.reverse(reverseWakeTimes);
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Ordena os horários do mais próximo ao mais distante
+
         Collections.reverse(reverseWakeTimes);
 
         StringBuilder sb = new StringBuilder("Horários sugeridos para acordar:\n");
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            // Configura o alarme para a hora selecionada
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 if (alarmManager.canScheduleExactAlarms()) {
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
@@ -165,41 +165,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestExactAlarmPermission() {
-        // Solicita permissão para alarmes exatos, se necessário (API 31+)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             Intent intent = new Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
             startActivity(intent);
         }
     }
 }
-/*
-
- private String calculateWakeTimes(String sleepTime) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        List<String> reverseWakeTimes = new ArrayList<>();
-        try {
-            Date sleepDate = sdf.parse(sleepTime);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(sleepDate);
-
-            // Adiciona os horários para acordar considerando ciclos de 90 minutos
-            for (int i = 1; i <= 6; i++) { // Considera 6 ciclos de sono
-                calendar.add(Calendar.MINUTE, 90); // Adiciona 90 minutos para cada ciclo
-                reverseWakeTimes.add(sdf.format(calendar.getTime()) + " - " + i + " ciclo(s)");
-            }
-            Collections.reverse(reverseWakeTimes);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        // Ordena os horários do mais próximo ao mais distante
-        Collections.reverse(reverseWakeTimes);
-
-        StringBuilder sb = new StringBuilder("Horários sugeridos para acordar:\n");
-        for (String time : reverseWakeTimes) {
-            sb.append(time).append("\n");
-        }
-        return sb.toString();
-    }
-
-    */
